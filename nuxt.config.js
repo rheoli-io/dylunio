@@ -1,3 +1,5 @@
+var config = require("config");
+
 module.exports = {
   /*
   ** Headers of the page
@@ -23,30 +25,32 @@ module.exports = {
     ]
   },
   css: ["~/assets/style/app.styl"],
-  plugins: ["~/plugins/vuelidate", "~/plugins/auth"],
+  plugins: ["~/plugins/vuelidate", "~/plugins/fontawesome"],
   modules: ["@nuxtjs/auth", "@nuxtjs/axios", "@nuxtjs/vuetify"],
   router: {
     middleware: ["auth"]
   },
   auth: {
-    endpoints: {
-      login: {
-        url: "http://localhost:5000/api/v1/users/login",
-        method: "post",
-        propertyName: "token"
-      },
-      logout: {
-        url: "http://localhost:5000/api/v1/users/logout",
-        method: "post"
-      },
-      user: {
-        url: "http://localhost:5000/api/v1/users",
-        method: "get",
-        propertyName: "user"
+    strategies: {
+      local: {
+        endpoints: {
+          login: {
+            url: config.get("backend.url") + "users/login",
+            method: "post",
+            propertyName: "token"
+          },
+          logout: {
+            url: config.get("backend.url") + "users/logout",
+            method: "post"
+          },
+          user: {
+            url: config.get("backend.url") + "users",
+            method: "get",
+            propertyName: "user"
+          }
+        }
       }
-    },
-    fetchUserOnLogin: true,
-    watchLoggedIn: true
+    }
   },
   /*
   ** Customize the progress bar color
@@ -57,7 +61,7 @@ module.exports = {
   */
   build: {
     extractCSS: true,
-    vendor: ["axios"],
+    vendor: ["axios", "vuetify"],
     /*
     ** Run ESLint on save
     */
