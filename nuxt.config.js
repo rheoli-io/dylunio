@@ -1,4 +1,5 @@
-var config = require("config");
+const config = require("config");
+const ConfigWebpackPlugin = require("config-webpack");
 
 module.exports = {
   /*
@@ -74,6 +75,8 @@ module.exports = {
           // exclude: /(node_modules)/
         });
       }
+
+      config.plugins.push(new ConfigWebpackPlugin());
     }
   }
 };

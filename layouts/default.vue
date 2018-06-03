@@ -28,7 +28,7 @@
     >
       <v-toolbar-side-icon @click.stop="drawer = !drawer"/>
       <v-toolbar-title class="white--text">Ryoli</v-toolbar-title>
-      <v-spacer></v-spacer>
+      <v-spacer/>
       <v-text-field
         flat
         solo-inverted
@@ -36,12 +36,15 @@
         label="Search"
         class="hidden-sm-and-down"
       />
-      <v-spacer></v-spacer>
+      <v-spacer/>
       <v-btn icon>
         <v-icon>notifications</v-icon>
       </v-btn>
       <v-menu>
-        <v-btn color="primary" dark slot="activator">
+        <v-btn 
+          color="primary" 
+          dark 
+          slot="activator">
           <font-awesome-icon icon="bars" />
         </v-btn>
         <v-list>

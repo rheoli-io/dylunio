@@ -43,7 +43,7 @@
 import { required, email } from "vuelidate/lib/validators";
 
 export default {
-  layout: "login",
+  layout: "anonymous",
 
   validations: {
     email: { required, email },
