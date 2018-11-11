@@ -10,4 +10,4 @@ import solid from "@fortawesome/fontawesome-free-solid";
 // associate it to the library, if you need to add more you can separate them by a comma
 fontawesome.library.add(brands);
 fontawesome.library.add(solid);
-Vue.component(FontAwesomeIcon.name, FontAwesomeIcon);
+Vue.component("font-awesome-icon", FontAwesomeIcon);

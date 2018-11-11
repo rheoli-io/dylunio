@@ -1,20 +1,27 @@
 <template>
-  <v-app>
-    <v-content>
-      <v-container
-        fluid
-        fill-height>
-        <v-layout
-          align-center
-          justify-center>
-          <v-flex
-            xs12
-            sm8
-            md4>
+<div>
+  ASD<flash-message variant="success"></flash-message>DSA
             <nuxt/>
-          </v-flex>
-        </v-layout>
-      </v-container>
-    </v-content>
-  </v-app>
+</div>
 </template>
+
+<script>
+
+export default {
+  computed: {
+    isLoading() {
+      return this.$store.state.isLoading;
+    }
+  },
+  watch: {
+    isLoading(val) {
+      if (val === true) {
+        this.$nuxt.$loading.start();
+      } else {
+        this.$nuxt.$loading.finish();
+      }
+    }
+  }
+}
+
+</script>

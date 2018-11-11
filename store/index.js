@@ -1,12 +1,15 @@
-import merge from "deepmerge";
+import Vuex from "vuex";
+import { createFlashStore } from "vuex-flash";
+import users from "./users";
 
-export const state = () => ({
+const state = () => ({
   isLoading: false,
   loadingQueue: [],
-  apiErrors: []
+  apiErrors: [],
+  alertMessages: {}
 });
 
-export const mutations = {
+const mutations = {
   setIsLoading(state, queueName) {
     state.isLoading = true;
     state.loadingQueue.push(queueName);
@@ -25,5 +28,38 @@ export const mutations = {
   },
   setApiErrors(state, errors) {
     state.apiErrors = errors;
+  },
+  deleteApiError(state, error) {
+    if (state.apiErrors.hasOwnProperty(error)) {
+      delete state.apiErrors[error];
+    }
+  },
+  addAlertMessage(state, payload) {
+    let type = payload["type"] || "info";
+    if (state.alertMessages.hasOwnProperty(type) === false) {
+      state.alertMessages[type] = [];
+    }
+    state.alertMessages[type].push(payload["message"]);
+  },
+  deleteAlertMessage(state, type) {
+    state.alertMessages[type] = [];
+  },
+  clearAlertMessages(state) {
+    state.alertMessages = [];
   }
 };
+
+const createStore = () => {
+  return new Vuex.Store({
+    state,
+    getters: {},
+    mutations,
+    actions: {},
+    modules: {
+      users
+    },
+    plugins: [createFlashStore()]
+  });
+};
+
+export default createStore;

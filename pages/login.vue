@@ -1,39 +1,17 @@
 <template>
   <v-card class="elevation-12">
-    <v-toolbar
-      dark
-      color="primary">
+    <flash-message variant="success"></flash-message>DSA
+    <v-toolbar dark color="primary">
       <v-toolbar-title>Login</v-toolbar-title>
     </v-toolbar>
     <v-form @submit.prevent="handleSubmit">
       <v-card-text>
-        <v-text-field
-          prepend-icon="email"
-          v-model="email"
-          :error-messages="emailErrors"
-          label="E-mail"
-          required
-          @input="$v.email.$touch()"
-          @blur="$v.email.$touch()"
-        />
-        <v-text-field
-          prepend-icon="lock"
-          v-model="password"
-          :error-messages="passwordErrors"
-          label="Password"
-          required
-          @input="$v.password.$touch()"
-          @blur="$v.password.$touch()"
-          type="password"
-        />
+        <v-text-field prepend-icon="email" v-model="email" :error-messages="emailErrors" label="E-mail" required @input="$v.email.$touch()" @blur="$v.email.$touch()" />
+        <v-text-field prepend-icon="lock" v-model="password" :error-messages="passwordErrors" label="Password" required @input="$v.password.$touch()" @blur="$v.password.$touch()" type="password" />
       </v-card-text>
       <v-card-actions>
-        <v-btn
-          type="submit"
-          color="primary">Login</v-btn>
-        <v-btn
-          flat
-          to="register">Register</v-btn>
+        <v-btn type="submit" color="primary">Login</v-btn>
+        <v-btn flat to="register">Register</v-btn>
       </v-card-actions>
     </v-form>
   </v-card>
@@ -41,9 +19,11 @@
 
 <script>
 import { required, email } from "vuelidate/lib/validators";
+import HttpStatus from "http-status-codes";
 
 export default {
   layout: "anonymous",
+  auth: false,
 
   validations: {
     email: { required, email },
@@ -52,8 +32,11 @@ export default {
 
   data: () => ({
     email: "",
-    password: ""
+    password: "",
+    genericErrors: {}
   }),
+
+  
 
   computed: {
     emailErrors() {
@@ -68,6 +51,16 @@ export default {
       if (!this.$v.password.$dirty) return errors;
       !this.$v.password.required && errors.push("Password is required");
       return errors;
+    },
+    hasGenericErrors() {
+      if (this.genericErrors.length > 0) {
+        return true;
+      }
+
+      return false;
+    },
+    registered() {
+      return this.$store.state.users.registered;
     }
   },
 
@@ -75,7 +68,7 @@ export default {
     handleSubmit() {
       this.$v.$touch();
 
-      if (this.$v.invalid) {
+      if (this.$v.$invalid) {
         return false;
       }
 
@@ -86,8 +79,19 @@ export default {
             password: this.password
           }
         })
+        .then(() => {
+          this.$router.push({ path: "/" });
+        })
         .catch(e => {
-          console.log(e);
+          if (
+            e.response &&
+            e.response.status &&
+            e.response.status == HttpStatus.UNAUTHORIZED
+          ) {
+            this.genericErrors = "Invalid Login";
+          } else {
+            this.genericErrors = "Unknown server error";
+          }
         });
     }
   }

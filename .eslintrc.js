@@ -9,8 +9,6 @@ module.exports = {
     },
     extends: [
         "eslint:recommended",
-        // https://github.com/vuejs/eslint-plugin-vue#priority-a-essential-error-prevention
-        // consider switching to `plugin:vue/strongly-recommended` or `plugin:vue/recommended` for stricter rules.
         "plugin:vue/strongly-recommended",
         "plugin:prettier/recommended"
     ],
@@ -19,9 +17,10 @@ module.exports = {
         'vue'
     ],
     // add your custom rules here
-    rules: {},
+    rules: {
+        "no-console": "off"
+    },
     globals: {
         "CONFIG": false,
-        "console": false
     }
 };

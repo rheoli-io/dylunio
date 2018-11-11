@@ -2,6 +2,7 @@ const config = require("config");
 const ConfigWebpackPlugin = require("config-webpack");
 
 module.exports = {
+  mode: "spa",
   /*
   ** Headers of the page
   */
@@ -26,12 +27,17 @@ module.exports = {
     ]
   },
   css: ["~/assets/style/app.styl"],
-  plugins: ["~/plugins/vuelidate", "~/plugins/fontawesome"],
+  plugins: [
+    "~/plugins/vuelidate",
+    "~/plugins/fontawesome",
+    "~/plugins/flashMessage"
+  ],
   modules: ["@nuxtjs/auth", "@nuxtjs/axios", "@nuxtjs/vuetify"],
   router: {
     middleware: ["auth"]
   },
   auth: {
+    resetOnError: true,
     strategies: {
       local: {
         endpoints: {
@@ -75,7 +81,7 @@ module.exports = {
           // exclude: /(node_modules)/
         });
       }
-
+      config.resolve.alias["vue"] = "vue/dist/vue.common";
       config.plugins.push(new ConfigWebpackPlugin());
     }
   }
