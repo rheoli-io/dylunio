@@ -1,21 +1,19 @@
+const pkg = require("./package");
 const config = require("config");
-const ConfigWebpackPlugin = require("config-webpack");
+const webpack = require("webpack");
 
 module.exports = {
   mode: "spa",
+
   /*
-  ** Headers of the page
-  */
+   ** Headers of the page
+   */
   head: {
-    title: "dylunio",
+    title: pkg.name,
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      {
-        hid: "description",
-        name: "description",
-        content: "Nuxt.js + Vuetify.js project"
-      }
+      { hid: "description", name: "description", content: pkg.description }
     ],
     link: [
       { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
@@ -26,13 +24,34 @@ module.exports = {
       }
     ]
   },
+
+  /*
+   ** Customize the progress-bar color
+   */
+  loading: { color: "#3B8070" },
+
+  /*
+   ** Global CSS
+   */
   css: ["~/assets/style/app.styl"],
+
+  /*
+   ** Plugins to load before mounting the App
+   */
   plugins: [
+    "@/plugins/vuetify",
     "~/plugins/vuelidate",
-    "~/plugins/fontawesome",
-    "~/plugins/flashMessage"
+    "~/plugins/fontawesome"
   ],
-  modules: ["@nuxtjs/auth", "@nuxtjs/axios", "@nuxtjs/vuetify"],
+
+  /*
+   ** Nuxt.js modules
+   */
+  modules: [
+    "@nuxtjs/auth",
+    // Doc: https://github.com/nuxt-community/axios-module#usage
+    "@nuxtjs/axios"
+  ],
   router: {
     middleware: ["auth"]
   },
@@ -60,29 +79,30 @@ module.exports = {
     }
   },
   /*
-  ** Customize the progress bar color
-  */
-  loading: { color: "#3B8070" },
+   ** Axios module configuration
+   */
+  axios: {
+    // See https://github.com/nuxt-community/axios-module#options
+  },
+
   /*
-  ** Build configuration
-  */
+   ** Build configuration
+   */
   build: {
-    extractCSS: true,
-    vendor: ["axios", "vuetify"],
     /*
-    ** Run ESLint on save
-    */
+     ** You can extend webpack config here
+     */
     extend(config, ctx) {
+      // Run ESLint on save
       if (ctx.isDev && ctx.isClient) {
         config.module.rules.push({
-          // enforce: 'pre',
+          // enforce: "pre",
           // test: /\.(js|vue)$/,
-          // loader: 'eslint-loader',
+          // loader: "eslint-loader",
           // exclude: /(node_modules)/
         });
       }
-      config.resolve.alias["vue"] = "vue/dist/vue.common";
-      config.plugins.push(new ConfigWebpackPlugin());
-    }
+    },
+    plugins: [new webpack.DefinePlugin({ CONFIG: JSON.stringify(config) })]
   }
 };

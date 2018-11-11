@@ -1,5 +1,5 @@
 {
   "backend": {
-    "url": "http://localhost:9001/api/v1/"
+    "url": ""
   }
 }

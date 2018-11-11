@@ -1,13 +1,12 @@
 <template>
   <v-card class="elevation-12">
-    <flash-message variant="success"></flash-message>DSA
-    <v-toolbar dark color="primary">
+    <v-toolbar color="primary">
       <v-toolbar-title>Login</v-toolbar-title>
     </v-toolbar>
     <v-form @submit.prevent="handleSubmit">
       <v-card-text>
-        <v-text-field prepend-icon="email" v-model="email" :error-messages="emailErrors" label="E-mail" required @input="$v.email.$touch()" @blur="$v.email.$touch()" />
-        <v-text-field prepend-icon="lock" v-model="password" :error-messages="passwordErrors" label="Password" required @input="$v.password.$touch()" @blur="$v.password.$touch()" type="password" />
+        <v-text-field prepend-icon="email" v-model="email" :error-messages="emailErrors" label="E-mail" required @input="$v.email.$touch();" @blur="$v.email.$touch();" />
+        <v-text-field prepend-icon="lock" v-model="password" :error-messages="passwordErrors" label="Password" required @input="$v.password.$touch();" @blur="$v.password.$touch();" type="password" />
       </v-card-text>
       <v-card-actions>
         <v-btn type="submit" color="primary">Login</v-btn>
@@ -35,8 +34,6 @@ export default {
     password: "",
     genericErrors: {}
   }),
-
-  
 
   computed: {
     emailErrors() {

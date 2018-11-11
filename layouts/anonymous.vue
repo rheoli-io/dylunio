@@ -1,12 +1,14 @@
 <template>
-<div>
-  ASD<flash-message variant="success"></flash-message>DSA
-            <nuxt/>
-</div>
+  <v-app dark>
+    <v-content>
+      <v-container>
+        <nuxt />
+      </v-container>
+    </v-content>
+  </v-app>
 </template>
 
 <script>
-
 export default {
   computed: {
     isLoading() {
@@ -22,6 +24,5 @@ export default {
       }
     }
   }
-}
-
+};
 </script>

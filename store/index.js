@@ -1,5 +1,4 @@
 import Vuex from "vuex";
-import { createFlashStore } from "vuex-flash";
 import users from "./users";
 
 const state = () => ({
@@ -57,8 +56,7 @@ const createStore = () => {
     actions: {},
     modules: {
       users
-    },
-    plugins: [createFlashStore()]
+    }
   });
 };
 

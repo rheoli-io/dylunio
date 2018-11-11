@@ -4,14 +4,14 @@
       <v-toolbar-title>Register</v-toolbar-title>
     </v-toolbar>
     <v-alert v-model="hasGenericErrors" type="error">
-      <span v-html="genericErrors"></span>
+      <span v-html="genericErrors" />
     </v-alert>
     <v-form @submit.prevent="handleSubmit">
       <v-card-text>
-        <v-text-field prepend-icon="person" v-model="username" :error-messages="usernameErrors" label="Username" required @input="$v.username.$touch()" @blur="$v.username.$touch()" />
-        <v-text-field prepend-icon="email" v-model="email" :error-messages="emailErrors" label="E-mail" required @input="$v.email.$touch()" @blur="$v.email.$touch()" />
-        <v-text-field prepend-icon="lock" v-model="password" :error-messages="passwordErrors" label="Password" required @input="$v.password.$touch()" @blur="$v.password.$touch()" type="password" />
-        <v-text-field prepend-icon="lock" v-model="passwordConfirm" :error-messages="passwordConfirmErrors" label="Password Confirm" required @input="$v.password.$touch()" @blur="$v.password.$touch()" type="password" />
+        <v-text-field prepend-icon="person" v-model="username" :error-messages="usernameErrors" label="Username" required @input="$v.username.$touch();" @blur="$v.username.$touch();" />
+        <v-text-field prepend-icon="email" v-model="email" :error-messages="emailErrors" label="E-mail" required @input="$v.email.$touch();" @blur="$v.email.$touch();" />
+        <v-text-field prepend-icon="lock" v-model="password" :error-messages="passwordErrors" label="Password" required @input="$v.password.$touch();" @blur="$v.password.$touch();" type="password" />
+        <v-text-field prepend-icon="lock" v-model="passwordConfirm" :error-messages="passwordConfirmErrors" label="Password Confirm" required @input="$v.password.$touch();" @blur="$v.password.$touch();" type="password" />
       </v-card-text>
       <v-card-actions>
         <v-btn type="submit" color="primary">Register</v-btn>
@@ -36,15 +36,7 @@ export default {
     return this.formValidation;
   },
 
-mounted() {
-    this.$store.commit(
-          "FLASH/SET_FLASH",
-          { message: "some message 123 321", variant: "success" }
-        );
-
-        this.$router.push('/login');
-  },
-
+  mounted() {},
 
   data: () => ({
     username: "",
@@ -140,10 +132,6 @@ mounted() {
         })
         .then(response => {
           if (response) {
-            this.$store.commit(
-          "FLASH/SET_FLASH",
-          { message: "some message 123", variant: "success" }
-        );
             this.$router.push({ path: "/login" });
           }
         });

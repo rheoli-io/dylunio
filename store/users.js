@@ -24,11 +24,6 @@ const actions = {
       .then(() => {
         commit("setLoaded", "register", { root: true });
         commit(USER_REGISTER_SUCCESS);
-        commit(
-          "FLASH/SET_FLASH",
-          { message: "some message", variant: "success" },
-          { root: true }
-        );
         return true;
       })
       .catch(error => {
