@@ -49,12 +49,17 @@
 </template>
 
 <script>
+import InventoryItems from "@/api/InventoryItems";
+
 export default {
   middleware: ["auth"],
   computed: {
     state() {
       return JSON.stringify(this.$auth.$state, undefined, 2);
     }
+  },
+  mounted() {
+    console.log(InventoryItems.test());
   }
 };
 </script>

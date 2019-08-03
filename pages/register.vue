@@ -36,8 +36,6 @@ export default {
     return this.formValidation;
   },
 
-  mounted() {},
-
   data: () => ({
     username: "",
     email: "",
@@ -112,6 +110,7 @@ export default {
 
       if (!this.$v.passwordConfirm.$dirty) return errors;
       !this.$v.passwordConfirm.required && errors.push("Password is required");
+      !this.$v.passwordConfirm.sameAsPassword && errors.push("Passwords don't match");
       return errors;
     }
   },
@@ -132,6 +131,7 @@ export default {
         })
         .then(response => {
           if (response) {
+            this.$store.commit('addAlertMessage', { type: 'success', message: 'Y  ou have successfully registered'});
             this.$router.push({ path: "/login" });
           }
         });

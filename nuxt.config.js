@@ -41,7 +41,8 @@ module.exports = {
   plugins: [
     "@/plugins/vuetify",
     "~/plugins/vuelidate",
-    "~/plugins/fontawesome"
+    "~/plugins/fontawesome",
+    "~/plugins/axios"
   ],
 
   /*
@@ -50,7 +51,8 @@ module.exports = {
   modules: [
     "@nuxtjs/auth",
     // Doc: https://github.com/nuxt-community/axios-module#usage
-    "@nuxtjs/axios"
+    "@nuxtjs/axios",
+    "@/modules/api"
   ],
   router: {
     middleware: ["auth"]
@@ -59,20 +61,33 @@ module.exports = {
     resetOnError: true,
     strategies: {
       local: {
+        _scheme: "~/plugins/authScheme.js",
         endpoints: {
           login: {
             url: config.get("backend.url") + "users/login",
             method: "post",
-            propertyName: "token"
+            propertyName: "token",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json"
+            }
           },
           logout: {
             url: config.get("backend.url") + "users/logout",
-            method: "post"
+            method: "post",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json"
+            }
           },
           user: {
             url: config.get("backend.url") + "users",
             method: "get",
-            propertyName: "user"
+            propertyName: "user",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json"
+            }
           }
         }
       }
@@ -82,6 +97,8 @@ module.exports = {
    ** Axios module configuration
    */
   axios: {
+    prefix: "/api",
+    credentials: true
     // See https://github.com/nuxt-community/axios-module#options
   },
 

@@ -14,7 +14,7 @@ const mutations = {
     state.loadingQueue.push(queueName);
   },
   setLoaded(state, queueName) {
-    let index = state.loadingQueue.indexOf(queueName);
+    const index = state.loadingQueue.indexOf(queueName);
     if (index > -1) {
       state.loadingQueue.splice(index, 1);
     }
@@ -34,17 +34,17 @@ const mutations = {
     }
   },
   addAlertMessage(state, payload) {
-    let type = payload["type"] || "info";
+    const type = payload.type || "info";
     if (state.alertMessages.hasOwnProperty(type) === false) {
       state.alertMessages[type] = [];
     }
-    state.alertMessages[type].push(payload["message"]);
+    state.alertMessages[type].push(payload.message);
   },
   deleteAlertMessage(state, type) {
     state.alertMessages[type] = [];
   },
   clearAlertMessages(state) {
-    state.alertMessages = [];
+    state.alertMessages = {};
   }
 };
 

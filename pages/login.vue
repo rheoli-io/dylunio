@@ -3,10 +3,28 @@
     <v-toolbar color="primary">
       <v-toolbar-title>Login</v-toolbar-title>
     </v-toolbar>
+    <alert-message></alert-message>
     <v-form @submit.prevent="handleSubmit">
       <v-card-text>
-        <v-text-field prepend-icon="email" v-model="email" :error-messages="emailErrors" label="E-mail" required @input="$v.email.$touch();" @blur="$v.email.$touch();" />
-        <v-text-field prepend-icon="lock" v-model="password" :error-messages="passwordErrors" label="Password" required @input="$v.password.$touch();" @blur="$v.password.$touch();" type="password" />
+        <v-text-field
+          v-model="email"
+          prepend-icon="email"
+          :error-messages="emailErrors"
+          label="E-mail"
+          required
+          @input="$v.email.$touch()"
+          @blur="$v.email.$touch()"
+        ></v-text-field>
+        <v-text-field
+          v-model="password"
+          prepend-icon="lock"
+          :error-messages="passwordErrors"
+          label="Password"
+          required
+          @input="$v.password.$touch()"
+          @blur="$v.password.$touch()"
+          type="password"
+        ></v-text-field>
       </v-card-text>
       <v-card-actions>
         <v-btn type="submit" color="primary">Login</v-btn>
@@ -19,10 +37,15 @@
 <script>
 import { required, email } from "vuelidate/lib/validators";
 import HttpStatus from "http-status-codes";
+import AlertMessage from "~/components/AlertMessage.vue";
 
 export default {
   layout: "anonymous",
   auth: false,
+
+  components: {
+    AlertMessage
+  },
 
   validations: {
     email: { required, email },
@@ -83,7 +106,7 @@ export default {
           if (
             e.response &&
             e.response.status &&
-            e.response.status == HttpStatus.UNAUTHORIZED
+            e.response.status === HttpStatus.UNAUTHORIZED
           ) {
             this.genericErrors = "Invalid Login";
           } else {
