@@ -1,9 +1,16 @@
-import Api from "@/modules/Api";
-
-const InventoryItems = {
-  test() {
-    console.log(Api());
+export default class InventoryItems {
+  constructor(api, config) {
+    this.api = api;
+    this.config = config;
   }
-};
 
-export default InventoryItems;
+  static structure() {
+    return {
+      name: ""
+    };
+  }
+
+  getInventoryItems() {
+    return this.api.findAll("inventory-items");
+  }
+}

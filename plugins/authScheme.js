@@ -5,12 +5,14 @@ export default class LocalScheme {
 
     this.options = Object.assign({}, DEFAULTS, options);
     this.$auth.ctx.app.$axios.setHeader("Content-Type", "application/json");
+    this.$auth.ctx.app.$api.jsonApi.headers["Content-Type"] = "application/json";
   }
 
   _setToken(token) {
     if (this.options.globalToken) {
       // Set Authorization token for all axios requests
       this.$auth.ctx.app.$axios.setHeader(this.options.tokenName, token);
+      this.$auth.ctx.app.$api.jsonApi.headers[this.options.tokenName] = token;
     }
   }
 
@@ -18,6 +20,7 @@ export default class LocalScheme {
     if (this.options.globalToken) {
       // Clear Authorization token for all axios requests
       this.$auth.ctx.app.$axios.setHeader(this.options.tokenName, false);
+      this.$auth.ctx.app.$api.jsonApi.headers[this.options.tokenName] = false;
     }
   }
 

@@ -59,7 +59,7 @@ export default {
     }
   },
   mounted() {
-    console.log(InventoryItems.test());
+    console.log(this.$api.InventoryItems.getInventoryItems());
   }
 };
 </script>

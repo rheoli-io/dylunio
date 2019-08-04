@@ -42,7 +42,8 @@ module.exports = {
     "@/plugins/vuetify",
     "~/plugins/vuelidate",
     "~/plugins/fontawesome",
-    "~/plugins/axios"
+    "~/plugins/axios",
+    "~/plugins/api"
   ],
 
   /*
@@ -52,7 +53,6 @@ module.exports = {
     "@nuxtjs/auth",
     // Doc: https://github.com/nuxt-community/axios-module#usage
     "@nuxtjs/axios",
-    "@/modules/api"
   ],
   router: {
     middleware: ["auth"]
@@ -64,7 +64,7 @@ module.exports = {
         _scheme: "~/plugins/authScheme.js",
         endpoints: {
           login: {
-            url: config.get("backend.url") + "users/login",
+            url: config.get("backend.url") + "/users/login",
             method: "post",
             propertyName: "token",
             headers: {
@@ -73,7 +73,7 @@ module.exports = {
             }
           },
           logout: {
-            url: config.get("backend.url") + "users/logout",
+            url: config.get("backend.url") + "/users/logout",
             method: "post",
             headers: {
               "Content-Type": "application/json",
@@ -81,7 +81,7 @@ module.exports = {
             }
           },
           user: {
-            url: config.get("backend.url") + "users",
+            url: config.get("backend.url") + "/users",
             method: "get",
             propertyName: "user",
             headers: {
